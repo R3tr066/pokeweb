@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Pokemon TCG - Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-primary text-white rounded p-5 mb-4">
+    <h1 class="display-4">Welcome to Pokemon TCG Explorer</h1>
+    <p class="lead">Discover and explore Pokemon Trading Cards from all sets and generations.</p>
+    <hr class="my-4">
+    <p>Browse through thousands of cards, search by name, or explore different sets.</p>
+    <div class="mt-4">
+        <a class="btn btn-light btn-lg me-3" href="{% url 'cards_list' %}" role="button">Browse Cards</a>
+        <a class="btn btn-outline-light btn-lg" href="{% url 'sets_list' %}" role="button">View Sets</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Search Cards</h5>
+                <p class="card-text">Find specific Pokemon cards by name.</p>
+                <form action="{% url 'cards_list' %}" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Enter Pokemon name...">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recent Features</h5>
+                <ul class="list-unstyled">
+                    <li>✨ Browse all Pokemon cards</li>
+                    <li>🔍 Advanced search functionality</li>
+                    <li>📚 Explore different card sets</li>
+                    <li>💾 Cached data for faster loading</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
