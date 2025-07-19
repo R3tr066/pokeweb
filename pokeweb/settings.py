@@ -115,3 +115,17 @@ SESSION_CACHE_ALIAS = 'default'
 # Pokemon TCG API Configuration
 POKEMON_TCG_API_KEY = config('POKEMON_TCG_API_KEY', default='')
 POKEMON_TCG_BASE_URL = config('POKEMON_TCG_BASE_URL', default='https://api.pokemontcg.io/v2')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',  # or INFO depending on how verbose you want
+    },
+}

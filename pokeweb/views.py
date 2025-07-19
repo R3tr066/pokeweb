@@ -5,6 +5,9 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.cache import cache_page
 from .services.poke_api import PokemonTCGAPI
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def home(request):
@@ -55,28 +58,20 @@ def card_detail(request, card_id):
     return render(request, 'cards/detail.html', context)
 
 
-@cache_page(60 * 30)  # Cache for 30 minutes
 def sets_list(request):
-    """Display list of Pokemon card sets"""
     api = PokemonTCGAPI()
-    page = request.GET.get('page', 1)
+    data = api.get_sets(page=1, page_size=1000)
 
-    try:
-        page = int(page)
-    except (ValueError, TypeError):
-        page = 1
+    # logger.debug(f"API response data: {data}")
 
-    data = api.get_sets(page=page)
+    sets = data.get('data', []) if data else []
+    total_count = data.get('totalCount', 0) if data else 0
 
     context = {
-        'sets': data.get('data', []) if data else [],
-        'current_page': page,
-        'total_count': data.get('totalCount', 0) if data else 0,
-        'page_size': data.get('pageSize', 20) if data else 20,
+        'sets': sets,
+        'total_count': total_count,
     }
-
     return render(request, 'sets/list.html', context)
-
 
 def set_detail(request, set_id):
     """Display detailed view of a specific set"""
